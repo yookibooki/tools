@@ -75,12 +75,16 @@ document.body.appendChild(document.createElement('style')).textContent = `
         width: 0;
         padding: 0;
     }
+    // .customSearchItem:hover {
+    //     filter: drop-shadow(1px 1px 1px #000)
+    //         drop-shadow(0px 0px 2px #8b9ba1)
+    //         drop-shadow(0px 0px 2px #8b9ba1)
+    //         drop-shadow(0px 0px 2px #8b9ba1)
+    //         drop-shadow(0px 0px 2px #8b9ba1);
+    // }
     .customSearchItem:hover {
-        filter: drop-shadow(1px 1px 1px #000)
-            drop-shadow(0px 0px 2px #8b9ba1)
-            drop-shadow(0px 0px 2px #8b9ba1)
-            drop-shadow(0px 0px 2px #8b9ba1)
-            drop-shadow(0px 0px 2px #8b9ba1);
+    transform: scale(1.5);
+    z-index: 1;
     }
     .customSearchItem {
         display: flex;
@@ -88,6 +92,7 @@ document.body.appendChild(document.createElement('style')).textContent = `
         width: 18px;
         padding: 1px 5px;
         margin: 0px;
+        transition: transform 0.1s ease-out;
     }
     .customSearchItem svg,
     .customSearchItem img,
