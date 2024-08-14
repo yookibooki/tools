@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name            Search YouTube and More From Within Google
+// @name            SearchBar
 // @description     Adds icons next to Google's search bar which let you search from other sites.
 // @match   https://www.google.com/search*
 // ==/UserScript==
