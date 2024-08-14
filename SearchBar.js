@@ -5,7 +5,6 @@
 // ==/UserScript==
 
 const newButtonsList = [
-   /* [0] = Title,  [1] = Domain,  [2] = Search URL,  [3] = Image URL */
     [ 'Yandex', 'https://yandex.com/', 'search/?text=', 'https://yandex.com/favicon.ico'],
     [ 'Bing', 'https://www.bing.com/', 'search?q=', 'https://www.bing.com/favicon.ico'],
     [ 'DuckDuckGo', 'https://duckduckgo.com/', '?q=', 'https://www.duckduckgo.com/favicon.ico'],
