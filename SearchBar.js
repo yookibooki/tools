@@ -53,7 +53,6 @@ function letsRock(update) {
     if (!update && container ) { return }
     makeButtonsHTML();
     var insertHere = document.querySelector('button[aria-label="Search"]') || document.querySelector('button[aria-label="Google Search"]') || document.querySelector('div[aria-label="Search by image"]');
-    /* First one is for most results pages such as All, News, Videos, Books, etc. Second one is for the Images results page. Third one is for Google's home page. */
     if (container) { container.remove() }
     insertHere.insertAdjacentHTML('afterend', newButtonsHTML);
 }
@@ -75,13 +74,6 @@ document.body.appendChild(document.createElement('style')).textContent = `
         width: 0;
         padding: 0;
     }
-    // .customSearchItem:hover {
-    //     filter: drop-shadow(1px 1px 1px #000)
-    //         drop-shadow(0px 0px 2px #8b9ba1)
-    //         drop-shadow(0px 0px 2px #8b9ba1)
-    //         drop-shadow(0px 0px 2px #8b9ba1)
-    //         drop-shadow(0px 0px 2px #8b9ba1);
-    // }
     .customSearchItem:hover {
     transform: scale(1.5);
     z-index: 1;
