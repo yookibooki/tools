@@ -30,8 +30,8 @@ sudo dnf -y install epel-release
 sudo dnf config-manager --set-enabled crb
 
 # Update PATH in .bashrc
-if ! grep -q '/usr/local/go/bin:/opt/python/3.13.0/bin' ~/.bashrc; then
-    echo 'export PATH=$PATH:/usr/local/go/bin:/opt/python/3.13.0/bin' >> ~/.bashrc
+if ! grep -q '/usr/local/go/bin' ~/.bashrc; then
+    echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
     log "Updated PATH in ~/.bashrc."
 fi
 source ~/.bashrc
@@ -45,7 +45,7 @@ sudo dnf -y install brave-browser
 
 # GO 1.23.2
 log "Downloading and installing Go 1.23.2..."
-wget -q https://go.dev/dl/go1.23.2.linux-amd64.tar.gz
+curl -s -O https://go.dev/dl/go1.23.2.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf go1.23.2.linux-amd64.tar.gz
 rm -f go1.23.2.linux-amd64.tar.gz  # Clean up
 
