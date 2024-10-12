@@ -17,7 +17,6 @@ check_command() {
 }
 
 # Check required commands
-check_command wget
 check_command dnf
 check_command rpm
 check_command sudo
@@ -69,26 +68,12 @@ sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
 sudo dnf -y install code
 
-# PYTHON 3.13
-log "Installing Python 3.13..."
-sudo dnf -y update
-sudo dnf -y groupinstall "Development Tools"
-sudo dnf -y install wget gcc openssl-devel bzip2-devel libffi-devel xz-devel tk-devel
-cd /tmp/
-wget -q https://www.python.org/ftp/python/3.13.0/Python-3.13.0.tgz
-tar xzf Python-3.13.0.tgz
-cd Python-3.13.0
-sudo ./configure --prefix=/opt/python/3.13.0/ --enable-optimizations --with-lto --with-computed-gotos --with-system-ffi
-sudo make -j "$(nproc)"
-sudo make altinstall
-cd ..
-sudo rm -rf Python-3.13.0  # Clean up
+# PYTHON 3.12
+log "Installing Python 3.12..."
+sudo dnf -y install python3.12
+sudo alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1
+sudo alternatives --config python3
 
-# Create symlinks for Python
-log "Creating symlinks for Python..."
-for binary in python3.13 pip3.13 pydoc3.13 idle3.13; do
-    sudo ln -sf /opt/python/3.13.0/bin/$binary /opt/python/3.13.0/bin/${binary%3.13}
-done
 
 # Create a script to check versions after reboot, and clean up the cron job
 log "Creating version check script..."
@@ -99,7 +84,6 @@ echo "Checking installed versions:"
 echo "Docker version: $(docker --version)"
 echo "PostgreSQL version: $(postgresql-17 --version)"
 echo "Brave version: $(brave-browser --version)"
-echo "NVIDIA driver info: $(nvidia-smi)"
 echo "Go version: $(go version)"
 echo "Python version: $(python3 --version)"
 
