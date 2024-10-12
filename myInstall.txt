@@ -1,4 +1,5 @@
 #DEFAULT
+sudo dnf remove -y firefox
 sudo dnf -y update
 sudo dnf -y groupinstall "Development Tools"
 sudo dnf install -y epel-release
