@@ -1,17 +1,17 @@
 #DEFAULT
-sudo dnf remove -y firefox
+sudo dnf -y remove firefox
 sudo dnf -y update
 sudo dnf -y groupinstall "Development Tools"
-sudo dnf install -y epel-release
+sudo dnf -y install epel-release
 sudo dnf config-manager --set-enabled crb
 echo 'export PATH=$PATH:/usr/local/go/bin:/opt/python/3.13.0/bin' >> ~/.bashrc && source ~/.bashrc
 
 
 #BRAVE
-sudo dnf install dnf-plugins-core
+sudo dnf -y install dnf-plugins-core
 sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
 sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-sudo dnf install brave-browser
+sudo dnf -y install brave-browser
 
 
 #GO 1.23.2
@@ -20,20 +20,20 @@ sudo tar -C /usr/local -xzf go1.23.2.linux-amd64.tar.gz
 
 
 #POSTGRESQL 17
-sudo dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+sudo dnf -y install https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm
 sudo dnf -qy module disable postgresql
-sudo dnf install -y postgresql17-server
+sudo dnf -y install postgresql17-server
 sudo /usr/pgsql-17/bin/postgresql-17-setup initdb
 
 #DOCKER
-sudo yum install -y yum-utils
+sudo yum -y install yum-utils
 sudo yum-config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
-sudo yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo yum -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 #VS CODE
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
-sudo dnf install -y code
+sudo dnf -y install code
 
 
 #PYTHON 3.13
@@ -59,15 +59,13 @@ sudo ln -s /opt/python/3.13.0/bin/python3.13-config      /opt/python/3.13.0/bin/
 
 
 #NVIDIA DRIVER
-sudo dnf install kernel-devel kernel-headers gcc make
+sudo dnf -y install kernel-devel kernel-headers gcc make
 sudo dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel9/x86_64/cuda-rhel9.repo
 sudo dnf clean all
 sudo dnf -y install nvidia-driver nvidia-settings
 sudo bash -c 'echo "blacklist nouveau" > /etc/modprobe.d/blacklist-nouveau.conf'
 sudo dracut --force
 sudo reboot
-
-
 
 
 
