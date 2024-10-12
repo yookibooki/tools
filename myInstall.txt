@@ -58,20 +58,9 @@ sudo ln -s /opt/python/3.13.0/bin/idle3.13          /opt/python/3.13.0/bin/idle
 sudo ln -s /opt/python/3.13.0/bin/python3.13-config      /opt/python/3.13.0/bin/python-config
 
 
-#NVIDIA DRIVER
-sudo dnf -y install kernel-devel kernel-headers gcc make
-sudo dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel9/x86_64/cuda-rhel9.repo
-sudo dnf clean all
-sudo dnf -y install nvidia-driver nvidia-settings
-sudo bash -c 'echo "blacklist nouveau" > /etc/modprobe.d/blacklist-nouveau.conf'
-sudo dracut --force
-sudo reboot
-
-
 
 docker --version
 postgresql-17 --version
 brave-browser --version
-nvidia-smi
 go version
 python3 --version
