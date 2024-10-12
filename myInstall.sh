@@ -20,12 +20,13 @@ check_command() {
 check_command dnf
 check_command rpm
 check_command sudo
+check_command curl
+check_command sed
 
 # DEFAULT
 log "Removing Firefox and updating the system..."
 sudo dnf -y remove firefox
 sudo dnf -y update
-sudo dnf -y groupinstall "Development Tools"
 sudo dnf -y install epel-release
 sudo dnf config-manager --set-enabled crb
 
@@ -47,7 +48,8 @@ sudo dnf -y install brave-browser
 log "Downloading and installing Go 1.23.2..."
 curl -s -O https://go.dev/dl/go1.23.2.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf go1.23.2.linux-amd64.tar.gz
-rm -f go1.23.2.linux-amd64.tar.gz  # Clean up
+sudo rm -f go1.23.2.linux-amd64.tar.gz  # Clean up
+sudo ln -s /usr/local/go/bin/go /usr/bin/go  # Create symlink for go
 
 # POSTGRESQL 17
 log "Installing PostgreSQL 17..."
@@ -74,7 +76,6 @@ sudo dnf -y install python3.12
 sudo alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1
 sudo alternatives --config python3
 
-
 # Create a script to check versions after reboot, and clean up the cron job
 log "Creating version check script..."
 cat << 'EOF' | sudo tee /usr/local/bin/check_versions.sh > /dev/null
@@ -82,7 +83,7 @@ cat << 'EOF' | sudo tee /usr/local/bin/check_versions.sh > /dev/null
 
 echo "Checking installed versions:"
 echo "Docker version: $(docker --version)"
-echo "PostgreSQL version: $(postgresql-17 --version)"
+echo "PostgreSQL version: $(psql --version)"  # Correct command for checking PostgreSQL version
 echo "Brave version: $(brave-browser --version)"
 echo "Go version: $(go version)"
 echo "Python version: $(python3 --version)"
@@ -91,7 +92,7 @@ echo "Python version: $(python3 --version)"
 rm -- "$0"
 
 # Remove the cron job entry to prevent it from running on future reboots
-sed -i '/check_versions.sh/d' /etc/crontab
+sed -i '\|check_versions.sh|d' /etc/crontab  # Use more specific matching for the cron job
 EOF
 
 # Make the version check script executable
@@ -101,4 +102,9 @@ sudo chmod +x /usr/local/bin/check_versions.sh
 echo "@reboot root /usr/local/bin/check_versions.sh" | sudo tee -a /etc/crontab > /dev/null
 
 log "Rebooting the system to apply changes..."
-sudo reboot
+read -p "Do you want to reboot now? (y/n) " choice
+if [[ "$choice" == [Yy] ]]; then
+    sudo reboot
+else
+    log "Please remember to reboot the system later to apply changes."
+fi
