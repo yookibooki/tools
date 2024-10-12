@@ -90,15 +90,6 @@ for binary in python3.13 pip3.13 pydoc3.13 idle3.13; do
     sudo ln -sf /opt/python/3.13.0/bin/$binary /opt/python/3.13.0/bin/${binary%3.13}
 done
 
-# NVIDIA DRIVER
-log "Installing NVIDIA driver..."
-sudo dnf -y install kernel-devel kernel-headers gcc make
-sudo dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel9/x86_64/cuda-rhel9.repo
-sudo dnf clean all
-sudo dnf -y install nvidia-driver nvidia-settings
-echo "blacklist nouveau" | sudo tee /etc/modprobe.d/blacklist-nouveau.conf > /dev/null
-sudo dracut --force
-
 # Create a script to check versions after reboot, and clean up the cron job
 log "Creating version check script..."
 cat << 'EOF' | sudo tee /usr/local/bin/check_versions.sh > /dev/null
