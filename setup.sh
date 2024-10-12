@@ -22,6 +22,7 @@ check_command rpm
 check_command sudo
 check_command curl
 check_command sed
+check_command systemctl  # Add systemctl to the check
 
 # DEFAULT
 log "Removing Firefox and updating the system..."
@@ -75,6 +76,28 @@ log "Installing Python 3.12..."
 sudo dnf -y install python3.12
 sudo alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1
 sudo alternatives --config python3
+
+# Enable Hibernation
+log "Creating a new swap file of size 24 GB..."
+# Turn off the current swap if it exists
+sudo swapoff -a || true  # Ignore errors if there's no swap
+
+# Create a new swap file
+sudo fallocate -l 24G /swapfile  # Create a 24 GB swap file
+sudo chmod 600 /swapfile        # Set proper permissions
+sudo mkswap /swapfile           # Make the file usable as swap
+
+# Turn the new swap file on
+sudo swapon /swapfile
+
+# Make it permanent
+echo '/swapfile swap swap defaults 0 0' | sudo tee -a /etc/fstab > /dev/null
+
+# Set the correct parameters for hibernation
+UUID=$(sudo blkid -s UUID -o value /swapfile)  # Use the swap file for UUID
+echo "GRUB_CMDLINE_LINUX_DEFAULT=\"quiet splash resume=UUID=$UUID\"" | sudo tee -a /etc/default/grub
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+log "Hibernation configured with a new 24 GB swap file."
 
 # Create a script to check versions after reboot, and clean up the cron job
 log "Creating version check script..."
