@@ -59,9 +59,6 @@ sudo ln -s /opt/python/3.13.0/bin/python3.13-config      /opt/python/3.13.0/bin/
 
 
 #NVIDIA DRIVER
-sudo dnf update -y
-sudo dnf install -y epel-release
-sudo dnf config-manager --set-enabled crb
 sudo dnf install kernel-devel kernel-headers gcc make
 sudo dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel9/x86_64/cuda-rhel9.repo
 sudo dnf clean all
