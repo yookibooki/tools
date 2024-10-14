@@ -34,7 +34,6 @@ sudo dnf -y install brave-browser
 log "Downloading and installing Go 1.23.2..."
 curl -s -O https://go.dev/dl/go1.23.2.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf go1.23.2.linux-amd64.tar.gz && sudo rm -f go1.23.2.linux-amd64.tar.gz
-sudo ln -s /usr/local/go/bin/go /usr/bin/go
 
 # Install PostgreSQL 17
 log "Installing PostgreSQL 17..."

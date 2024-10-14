@@ -24,8 +24,9 @@ check_command systemctl  # Add systemctl to the check
 
 # DEFAULT
 log "Removing Firefox and updating the system..."
-sudo apt -y remove firefox
+sudo apt -y autopurge firefox
 sudo apt -y update
+sudo apt -y install apt-transport-https ca-certificates curl software-properties-common
 
 # Update PATH in .bashrc
 if ! grep -q '/usr/local/go/bin' ~/.bashrc; then
@@ -37,8 +38,7 @@ source ~/.bashrc
 # BRAVE
 log "Installing Brave browser..."
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-sudo apt update
+echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 sudo apt install brave-browser -y
 
 # GO 1.23.2
@@ -46,35 +46,32 @@ log "Downloading and installing Go 1.23.2..."
 curl -s -O https://golang.org/dl/go1.23.2.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf go1.23.2.linux-amd64.tar.gz
 sudo rm -f go1.23.2.linux-amd64.tar.gz  # Clean up
-sudo ln -s /usr/local/go/bin/go /usr/bin/go  # Create symlink for go
 
 # POSTGRESQL 17
 log "Installing PostgreSQL 17..."
-sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-sudo apt update
-sudo apt install postgresql-17 -y
+sudo install -d /usr/share/postgresql-common/pgdg
+sudo curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc
+sudo sh -c 'echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+sudo apt -y install postgresql
 
 # DOCKER
 log "Installing Docker..."
-sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
+sudo apt -y autopurge docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-ce-rootless-extras
+sudo rm -rf /var/lib/docker
+sudo rm -rf /var/lib/containerd
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
-sudo apt update
-sudo apt install docker-ce docker-ce-cli containerd.io -y
+sudo apt -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 # VS CODE
 log "Installing Visual Studio Code..."
-wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /usr/share/keyrings/microsoft.gpg > /dev/null
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" | sudo tee /etc/apt/sources.list.d/vscode.list
-sudo apt update
+echo "code code/add-microsoft-repo boolean true" | sudo debconf-set-selections
 sudo apt install code -y
 
 # PYTHON 3.12
-log "Installing Python 3.12..."
-sudo apt install python3.12 -y
-sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1
-sudo update-alternatives --config python3
+log "Installing Pip3/venv..."
+sudo apt install python3-venv python3-pip -y
+
 
 # Enable Hibernation
 log "Creating a new swap file of size 16 GB..."
