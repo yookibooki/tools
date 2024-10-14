@@ -5,18 +5,9 @@ log() {
     echo -e "\n\033[1;34m$1\033[0m"
 }
 
-check_command() {
-    command -v "$1" &> /dev/null || { log "$1 is not installed. Please install it."; exit 1; }
-}
-
-# Check required commands
-for cmd in dnf rpm sudo curl sed systemctl; do
-    check_command "$cmd"
-done
-
 log "Removing Firefox and updating the system..."
 sudo dnf -y remove firefox && sudo dnf -y update
-sudo dnf -y install epel-release
+sudo dnf -y install curl epel-release dnf-plugins-core yum-utils
 sudo dnf config-manager --set-enabled crb
 
 # Update PATH in .bashrc
@@ -25,7 +16,6 @@ source ~/.bashrc
 
 # Install Brave
 log "Installing Brave browser..."
-sudo dnf -y install dnf-plugins-core
 sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
 sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 sudo dnf -y install brave-browser
@@ -44,7 +34,6 @@ sudo /usr/pgsql-17/bin/postgresql-17-setup initdb
 
 # Install Docker
 log "Installing Docker..."
-sudo dnf -y install yum-utils
 sudo dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
 sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 

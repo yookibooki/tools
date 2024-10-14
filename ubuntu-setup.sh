@@ -8,20 +8,6 @@ log() {
     echo -e "\n\033[1;34m$1\033[0m"
 }
 
-# Function to check for commands
-check_command() {
-    if ! command -v "$1" &> /dev/null; then
-        log "$1 is not installed. Please install it before running this script."
-        exit 1
-    fi
-}
-
-# Check required commands
-check_command apt
-check_command curl
-check_command sed
-check_command systemctl  # Add systemctl to the check
-
 # DEFAULT
 log "Removing Firefox and updating the system..."
 sudo apt -y autopurge firefox
