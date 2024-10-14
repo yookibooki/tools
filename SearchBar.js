@@ -5,26 +5,25 @@
 // ==/UserScript==
 
 const newButtonsList = [
-    [ 'Yandex', 'https://yandex.com/', 'search/?text=', 'https://yandex.com/favicon.ico'],
-    [ 'Bing', 'https://www.bing.com/', 'search?q=', 'https://www.bing.com/favicon.ico'],
-    [ 'DuckDuckGo', 'https://duckduckgo.com/', '?q=', 'https://www.duckduckgo.com/favicon.ico'],
-    [ 'Startpage', 'https://www.startpage.com/', 'do/search?q=', 'https://www.startpage.com/favicon.ico'],
-    [ 'Brave Search', 'https://search.brave.com/', 'search?q=', 'https://brave.com/static-assets/images/brave-favicon.png'],
-    [ 'Qwant', 'https://www.qwant.com/', '?q=', 'https://www.qwant.com/favicon.ico'],
+    [ 'Yandex', 'https://yandex.com/', 'search/?text=', 'https://www.google.com/s2/favicons?domain=yandex.com&sz=32'],
+    [ 'Bing', 'https://www.bing.com/', 'search?q=', 'https://www.google.com/s2/favicons?domain=bing.com&sz=32'],
+    [ 'DuckDuckGo', 'https://duckduckgo.com/', '?q=', 'https://www.google.com/s2/favicons?domain=duckduckgo.com&sz=32'],
+    [ 'Startpage', 'https://www.startpage.com/', 'do/search?q=', 'https://www.google.com/s2/favicons?domain=startpage.com&sz=32'],
+    [ 'Brave Search', 'https://search.brave.com/', 'search?q=', 'https://www.google.com/s2/favicons?domain=brave.com&sz=32'],
+    [ 'Qwant', 'https://www.qwant.com/', '?q=', 'https://www.google.com/s2/favicons?domain=qwant.com&sz=32'],
     [ 'Searx', 'https://search.inetol.net/', 'search?q=', 'https://search.inetol.net/favicon.ico'],
-    [ 'Yahoo', 'https://search.yahoo.com/', 'search?p=', 'https://www.yahoo.com/favicon.ico'],
+    [ 'Yahoo', 'https://search.yahoo.com/', 'search?p=', 'https://www.google.com/s2/favicons?domain=yahoo.com&sz=32'],
     [ 'Perplexity', 'https://www.perplexity.ai/', 'search?q=', 'https://www.google.com/s2/favicons?domain=perplexity.ai&sz=32'],
-    [ 'Ecosia', 'https://www.ecosia.org/', 'search?q=', 'https://www.ecosia.org/favicon.ico'],
-    [ 'Reddit', 'https://www.reddit.com/', 'search?q=', 'https://www.reddit.com/favicon.ico'],
+    [ 'Ecosia', 'https://www.ecosia.org/', 'search?q=', 'https://www.google.com/s2/favicons?domain=ecosia.org&sz=32'],
+    [ 'Reddit', 'https://www.reddit.com/', 'search?q=', 'https://www.google.com/s2/favicons?domain=reddit.com&sz=32'],
     [ 'Medium', 'https://medium.com/', 'search?q=', 'https://www.google.com/s2/favicons?domain=medium.com&sz=32'],
-    [ 'Wikipedia', 'https://en.wikipedia.org/', 'wiki/Special:Search?search=', 'https://en.wikipedia.org/favicon.ico'],
-    [ 'ChatGPT', 'https://chat.openai.com/', '?q=', 'https://chat.openai.com/favicon.ico'],
-    [ 'Quora', 'https://www.quora.com/', 'search?q=', 'https://www.quora.com/favicon.ico'],
-    [ 'Github ', 'https://github.com/', 'search?q=', 'https://github.com/favicon.ico'],
-    [ 'Stack Overflow', 'https://stackoverflow.com/', 'search?q=', 'https://stackoverflow.com/favicon.ico'],
+    [ 'Wikipedia', 'https://en.wikipedia.org/', 'wiki/Special:Search?search=', 'https://www.google.com/s2/favicons?domain=wikipedia.org&sz=32'],
+    [ 'ChatGPT', 'https://chat.openai.com/', '?q=', 'https://www.google.com/s2/favicons?domain=openai.com&sz=32'],
+    [ 'Quora', 'https://www.quora.com/', 'search?q=', 'https://www.google.com/s2/favicons?domain=quora.com&sz=32'],
+    [ 'Github ', 'https://github.com/', 'search?q=', 'https://www.google.com/s2/favicons?domain=github.com&sz=32'],
+    [ 'Stack Overflow', 'https://stackoverflow.com/', 'search?q=', 'https://www.google.com/s2/favicons?domain=stackoverflow.com&sz=32'],
     [ 'LibGen', 'https://libgen.is/', 'search.php?req=', 'https://libgen.is/favicon.ico']
 ]
-
 let searchForm = document.querySelector('*[name="q"]');
 let searchTerms = searchForm.value;
 
