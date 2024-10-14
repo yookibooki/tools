@@ -4,6 +4,7 @@
 // @require            https://unpkg.com/vue@3/dist/vue.global.js
 // ==/UserScript==
 
+// github.com/hydrotho is the author of this userscipt. I just archived it.
 (function (vue) {
     'use strict';
   

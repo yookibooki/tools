@@ -22,8 +22,7 @@ const newButtonsList = [
     [ 'Quora', 'https://www.quora.com/', 'search?q=', 'https://www.quora.com/favicon.ico'],
     [ 'Github ', 'https://github.com/', 'search?q=', 'https://github.com/favicon.ico'],
     [ 'Stack Overflow', 'https://stackoverflow.com/', 'search?q=', 'https://stackoverflow.com/favicon.ico'],
-    [ 'LibGen', 'https://libgen.is/', 'search.php?req=', 'https://libgen.is/favicon.ico'],
-    [ 'Internet Archive', 'https://archive.org/', 'search.php?query=', 'https://archive.org/favicon.ico']
+    [ 'LibGen', 'https://libgen.is/', 'search.php?req=', 'https://libgen.is/favicon.ico']
 ]
 
 let searchForm = document.querySelector('*[name="q"]');
